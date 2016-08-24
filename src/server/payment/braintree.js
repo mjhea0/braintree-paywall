@@ -17,7 +17,7 @@ function createTransaction(nonce, callback) {
   gateway.transaction.sale({
     amount: '10.00',
     paymentMethodNonce: nonce
-	},
+  },
   function (err, result) {
     if (err) {
       callback(err);
