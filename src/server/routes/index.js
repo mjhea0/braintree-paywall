@@ -7,25 +7,30 @@ var paid = false;
 var router = express.Router();
 
 router.get('/', function (req, res, next) {
+  var renderObject = {};
+  renderObject.title = 'Braintree Paywall';
+  // get client token
   braintree.getClientToken(function(err, token) {
     if (err) {
       return next(err);
     }
-    var renderObject = {};
-    renderObject.title = 'Braintree Paywall - free';
     renderObject.token = token;
     res.render('index', renderObject);
   });
 });
 
 router.post('/checkout', function(req, res, next) {
-  var nonce = 'fake-valid-nonce';
-  braintree.createTransaction(nonce, function(err, token) {
+  var nonce = req.body.payment_method_nonce;
+  braintree.createTransaction(nonce, function(err, result) {
     if (err) {
       return next(err);
     }
-    paid = true;
-    res.redirect('/paid');
+    if (result.success || result.transaction) {
+      paid = true;
+      res.redirect('/paid');
+    } else {
+      console.log('handle this error!');
+    }
   });
 });
 

@@ -15,7 +15,7 @@ function getClientToken(callback) {
 
 function createTransaction(nonce, callback) {
   gateway.transaction.sale({
-    amount: '10.00',
+    amount: '10.00', // change me!
     paymentMethodNonce: nonce
   },
   function (err, result) {
