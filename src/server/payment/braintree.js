@@ -25,7 +25,7 @@ function createTransaction(nonce, callback) {
     if (result) {
       callback(null, result);
     }
-	});
+  });
 }
 
 module.exports = {
